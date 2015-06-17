@@ -1,28 +1,38 @@
-     public static boolean isMatch(String s, String p) {
+public class Solution {
+    public boolean isMatch(String s, String p) {
         int lens=s.length();
         int lenp=p.length();
-        if(lens<1||lenp<1)
-            return false;
-        boolean[] pmatch=new boolean[lens+1];
-        boolean[] match=new boolean[lens+1];
-        pmatch[0]=true;
-        for(int i=1;i<=lenp;i++){
-            char pc=p.charAt(i-1);
-            int j;
-            for(j=1;j<=lens;j++){
-                if(pc=='?'){
-                    match[j]=pmatch[j-1];
-                }
-                else if(pc=='*'){
-                    match[j]=pmatch[j]||pmatch[j-1];
-                }
-                else{//character
-                    if(p.charAt(i-1)==s.charAt(j-1))
-                        match[j]=pmatch[j-1];
-                }
-                pmatch[j-1]=match[j-1];
+        if(lens==0&&lenp==0)
+            return true;
+        int ps=0;
+        int pp=0;
+        int tps=-1;
+        int tpp=-1;
+        while(ps<lens){
+            if(pp<lenp&&(p.charAt(pp)=='?'||p.charAt(pp)==s.charAt(ps))){
+                ps++;
+                pp++;
             }
-            pmatch[j-1]=match[j-1];
+            else if(pp<lenp&&p.charAt(pp)=='*'){
+                tps=ps;
+                tpp=pp;
+                pp++;
+            }
+            else{
+                if(tpp>=0){
+                    ps=tps+1;
+                    pp=tpp+1;
+                    tps=ps;
+                }
+                else
+                    return false;
+            }
         }
-        return match[lens];
+        boolean flag=true;
+        while(pp<lenp&&flag){ 
+            if(p.charAt(pp++)!='*')
+                flag=false;
+            } 
+        return flag;
     }
+}
