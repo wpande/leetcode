@@ -1,20 +1,15 @@
-   public static boolean isMatch(String s, String p) {
+     public static boolean isMatch(String s, String p) {
         int lens=s.length();
         int lenp=p.length();
         if(lens<1||lenp<1)
             return false;
         boolean[] pmatch=new boolean[lens+1];
         boolean[] match=new boolean[lens+1];
-        int[] cnt=new int[lenp];
-        cnt[lenp-1]=0;
-        for(int i=lenp-2;i>=0;i--)
-            if(p.charAt(i+1)!='*')
-                cnt[i]=cnt[i+1]+1;
         pmatch[0]=true;
         for(int i=1;i<=lenp;i++){
             char pc=p.charAt(i-1);
             int j;
-            for(j=1;j<=lens-cnt[i-1];j++){
+            for(j=1;j<=lens;j++){
                 if(pc=='?'){
                     match[j]=pmatch[j-1];
                 }
