@@ -46,15 +46,14 @@ public class Solution {
         for(int i=0;i<lenx;i++){
             QuEle qe=new QuEle(buildings[i][0],buildings[i][1],buildings[i][2],i);
             rbuf=rpq.isEmpty()?null:rpq.peek();
-            while(rbuf!=null&&rbuf.r<=qe.l){
+            while(rbuf!=null&&rbuf.r<qe.l){
                 rbuf=rpq.poll();
                 hbuf=hpq.peek();
                 if(rbuf.no==hbuf.no){
                 	hpq.poll();
                     QuEle next=hpq.isEmpty()?null:hpq.peek();
                     int[] buf={rbuf.r,next==null?0:next.h};
-                    if(!(rbuf.r==qe.l&&next==null))
-                    	res.add(buf);
+                    res.add(buf);
                 }
                 else
                 	hpq.remove(rbuf);
